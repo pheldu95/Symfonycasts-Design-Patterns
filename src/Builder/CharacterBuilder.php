@@ -10,12 +10,19 @@ use App\AttackType\FireBoltType;
 use App\AttackType\MultiAttackType;
 use App\AttackType\TwoHandedSwordType;
 use App\Character\Character;
+use Psr\Log\LoggerInterface;
+
 class CharacterBuilder
 {
     private int $maxHealth;
     private int $baseDamage;
     private array $attackTypes;
     private string $armorType;
+
+    public function __construct(private LoggerInterface $logger)
+    {
+    }
+
     public function setMaxHealth(int $maxHealth): self
     {
         $this->maxHealth = $maxHealth;
@@ -40,6 +47,11 @@ class CharacterBuilder
     }
     public function buildCharacter(): Character
     {
+        $this->logger->info('Creating a character!', [
+            'maxHealth' => $this->maxHealth,
+            'baseDamage' => $this->baseDamage,
+        ]);
+
         $attackTypes = array_map(fn(string $attackType) => $this->createAttackType($attackType), $this->attackTypes);
         if(count($attackTypes) === 1){
             $attackType = $attackTypes[0];
