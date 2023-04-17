@@ -19,7 +19,7 @@ class GameApplication
 
     public function play(Character $player, Character $ai): FightResult
     {
-        $this->eventDispatcher->dispatch(new FightStartingEvent());
+        $this->eventDispatcher->dispatch(new FightStartingEvent($player, $ai));
 
         $player->rest();
         $fightResult = new FightResult();
