@@ -8,6 +8,7 @@ use App\Event\OutputFightStartingSubscriber;
 use App\FightResult;
 use App\GameApplication;
 use App\Observer\XpEarnedObserver;
+use App\Service\OutputtingXpCalculator;
 use App\Service\XpCalculator;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -29,6 +30,11 @@ class GameCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $xpCalculator = new XpCalculator();
+        //here is how we can use the decorator
+        $xpCalculator = new OutputtingXpCalculator($xpCalculator);
+        $this->game->subscribe(new XpEarnedObserver($xpCalculator));
+
         $io = new SymfonyStyle($input, $output);
         //symfony automatically calls the bellow line on its own, so can comment it out
         #$this->eventDispatcher->addSubscriber(new OutputFightStartingSubscriber());

@@ -28,7 +28,7 @@ class Kernel extends BaseKernel implements CompilerPassInterface
         foreach($taggedObservers as $id=>$tags){
             //This is a fancy way of saying that we want the subscribe() method to be called on GameApplication...
             //and for it to pass the service that holds the game.observer tag.
-            $definition->addMethodCall('subscribe', [new Reference($id)]);
+//            $definition->addMethodCall('subscribe', [new Reference($id)]);
         }
     }
 }

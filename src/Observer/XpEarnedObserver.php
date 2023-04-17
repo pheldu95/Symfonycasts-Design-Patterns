@@ -4,9 +4,11 @@ namespace App\Observer;
 
 use App\Service\XpCalculator;
 use App\FightResult;
+use App\Service\XpCalculatorInterface;
+
 class XpEarnedObserver implements GameObserverInterface
 {
-    public function __construct(private readonly XpCalculator $xpCalculator){
+    public function __construct(private readonly XpCalculatorInterface $xpCalculator){
 
     }
 
